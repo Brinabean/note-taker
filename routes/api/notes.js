@@ -1,11 +1,9 @@
 const router = require("express").Router();
-const { createNewNote, validatenote } = require("../../lib/notes");
-const { notes } = require("../../db/db.json");
+const { createNewNote, validatenote, deleteNotes } = require("../../lib/notes");
+const { notes } = require("../../db/db");
 
 router.get("/notes", (req, res) => {
-  //do i need something like this?
-  let results = notes;
-  res.json(results);
+  res.json(notes);
 });
 
 router.post("/notes", (req, res) => {
@@ -21,4 +19,9 @@ router.post("/notes", (req, res) => {
   }
 });
 
+router.delete("/api/notes/:id", (req, res) => {
+  if (deleteNotes(req.body)) {
+    res.json(notes);
+  }
+});
 module.exports = router;
